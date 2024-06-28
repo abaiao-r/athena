@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: ./backend   # Specify the relative path to Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+    volumes:
+      - ./backend:/backend  # Mount the backend directory to /backend in the container
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  nginx:
+      build:
+        context: ./nginx
+      ports:
+        - "8080:80"
+        - "10443:443" # Map host port 10443 to container port 443
+      volumes:
+          - ./backend/static:/backend/static    # Assuming Django collects static files here
+          - ./backend/media:/backend/media      # Assuming Django stores media files here
+          - ./conf/nginx.conf:/etc/nginx/conf/nginx.conf
+          - ./nginx/ssl:/etc/nginx/ssl:ro   
+      depends_on:
+        - web
+        
+volumes:
+  postgres_data:
