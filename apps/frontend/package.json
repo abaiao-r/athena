@@ -11,7 +11,10 @@
     "deploy": "npm run build && serve dist"
   },
   "dependencies": {
+    "axios": "^1.7.2",
+    "bootstrap": "^5.3.3",
     "connect": "^3.7.0",
+    "jquery": "^3.7.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "serv": "^0.2.4",
