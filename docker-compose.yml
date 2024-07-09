@@ -29,9 +29,10 @@ services:
       context: .
       dockerfile: apps/docker/frontend/Dockerfile
     ports:
-      - "3000:3000"
+      - "5173:5173"
     volumes:
       - node_modules:/apps/frontend/node_modules
+      - ./apps/frontend:/apps/frontend
     env_file:
       - ./.env
   

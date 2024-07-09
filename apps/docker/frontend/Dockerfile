@@ -6,4 +6,9 @@ COPY ./apps/frontend .
 
 RUN npm install
 
-CMD [ "npm", "run", "deploy" ]
+EXPOSE 5173
+
+# if you want to run the app in development mode
+CMD [ "npm", "run", "dev", "--", "--host", "0.0.0.0" ]
+# if you want to run the app in production mode
+#CMD [ "npm", "run", "deploy" ]
