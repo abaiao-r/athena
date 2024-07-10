@@ -30,7 +30,7 @@ class App extends React.Component<{}, AppState> {
 
   fetchDetails = async () => {
     try {
-      const res = await axios.get<Detail[]>("http://localhost:8000/wel/");
+      const res = await axios.get<Detail[]>("https://localhost:443/wel/");
       this.setState({ details: res.data, loading: false });
     } catch (error) {
       this.setState({ error: error as string, loading: false });
@@ -58,7 +58,7 @@ class App extends React.Component<{}, AppState> {
   handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8000/wel/", {
+      await axios.post("https://localhost:443/wel/", {
         name: this.state.user,
         detail: this.state.quote,
       });

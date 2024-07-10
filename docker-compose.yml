@@ -42,7 +42,7 @@ services:
       context: .
       dockerfile: apps/docker/nginx/Dockerfile
     ports:
-      - "80:80"
+      - "443:443"
     volumes:
       - static:/apps/backend/static
 
